@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-synchro-light-base;
+  }
+
+  * {
+    @apply border-synchro-light-gray;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-block bg-synchro-gold text-synchro-white px-6 py-3 rounded font-semibold hover:bg-opacity-90 transition;
+  }
+
+  .btn-secondary {
+    @apply inline-block border border-synchro-gold text-synchro-gold px-6 py-3 rounded font-semibold hover:bg-synchro-gold hover:text-synchro-white transition;
+  }
+
+  .card {
+    @apply bg-synchro-white rounded border border-synchro-light-gray p-6 shadow-sm hover:shadow-md transition;
+  }
+
+  .input-base {
+    @apply px-4 py-2 border border-synchro-light-gray rounded focus:outline-none focus:border-synchro-sky-blue transition;
+  }
+}
