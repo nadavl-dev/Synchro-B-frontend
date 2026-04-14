@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFilters } from '../hooks/useFilters';
 import { useRecommend } from '../hooks/useRecommend';
@@ -46,7 +46,7 @@ export default function SearchPage() {
         sdk_languages: selectedLanguages.length > 0 ? selectedLanguages : undefined,
         logic_archetype: selectedArchetype || undefined,
         integration_difficulty: selectedDifficulty || undefined,
-        containerized: containerized === 'any' ? undefined : containerized === 'yes',
+        containerized: containerized === 'any' ? undefined : containerized === 'yes' ? true : false,
         technical_stack: selectedTechStack.length > 0 ? selectedTechStack : undefined,
         risk_level: selectedRiskLevel || undefined,
         state_complexity: selectedComplexity || undefined,
@@ -61,9 +61,17 @@ export default function SearchPage() {
       onSuccess: (data) => {
         navigate('/results', { state: { results: data, filters: request.filters } });
       },
-      onError: (error) => {
+      onError: (error: any) => {
         console.error('Recommendation error:', error);
-        // TODO: Show error message
+        // If LLM failed (502), retry without prompt for filter-only results
+        if (error?.response?.status === 502 && request.prompt) {
+          const fallbackRequest = { ...request, prompt: undefined };
+          submitRecommend(fallbackRequest, {
+            onSuccess: (data) => {
+              navigate('/results', { state: { results: data, filters: request.filters } });
+            },
+          });
+        }
       },
     });
   };
@@ -271,9 +279,19 @@ export default function SearchPage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-synchro-gold text-synchro-white py-3 rounded font-semibold hover:bg-opacity-90 transition disabled:opacity-50"
+              className="w-full bg-synchro-gold text-synchro-white py-4 rounded font-semibold hover:bg-opacity-90 transition disabled:opacity-70"
             >
-              {isSubmitting ? 'Finding Products...' : 'Find Products'}
+              {isSubmitting ? (
+                <span className="flex items-center justify-center gap-3">
+                  <svg className="animate-spin h-5 w-5 text-synchro-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  </svg>
+                  AI is analyzing products for you...
+                </span>
+              ) : (
+                'Find Products'
+              )}
             </button>
           </form>
         </div>
