@@ -52,7 +52,7 @@ export default function SearchPage() {
         state_complexity: selectedComplexity || undefined,
         api_surface_area: selectedApiSurface || undefined,
       },
-      prompt: prompt || 'Recommend the best-matching open-source products',
+      prompt: prompt || 'Recommend the best-matching products',
       buyer_context: buyerContext || undefined,
       top_n: 5,
     };

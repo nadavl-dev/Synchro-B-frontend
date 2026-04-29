@@ -5,7 +5,7 @@ export default function Footer() {
         <div className="grid grid-cols-3 gap-12 mb-8">
           <div>
             <h3 className="font-semibold text-synchro-dark-base mb-4">SynchroB</h3>
-            <p className="text-sm text-synchro-medium-gray">Find the perfect open-source tools for your needs.</p>
+            <p className="text-sm text-synchro-medium-gray">Find the perfect software tools for your needs.</p>
           </div>
           <div>
             <h3 className="font-semibold text-synchro-dark-base mb-4">Product</h3>

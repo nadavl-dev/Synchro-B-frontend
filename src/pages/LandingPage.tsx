@@ -7,7 +7,7 @@ export default function LandingPage() {
       <section className="flex-1 flex items-center justify-center px-6 py-20">
         <div className="max-w-2xl text-center">
           <h1 className="font-display text-5xl font-bold text-synchro-dark-base mb-6">
-            Find the perfect open-source tool
+            Find the perfect software tool
           </h1>
           <p className="text-xl text-synchro-dark-gray mb-12 leading-relaxed">
             Describe what you need. We recommend the best-matching products with integration roadmaps.
